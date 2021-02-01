@@ -1,8 +1,31 @@
+% !TeX spellcheck = en_GB
 \documentclass[a4paper, 11pt]{article}
+\usepackage[english]{babel}
+\usepackage{newtxtext,newtxmath}
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={150mm,257mm},
+	top=20mm,
+}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+
+\setlength\parindent{0pt}
 
 %opening
-\title{Portfolio I}
-\author{Leon F.A. Wetzel}
+\title{\textbf{Natural Language Processing}\\Portfolio I}
+\author{Leon F.A. Wetzel\\ \texttt{l.f.a.wetzel@student.rug.nl}}
 
 \begin{document}
 
@@ -10,12 +33,67 @@
 
 \begin{abstract}
 	
-	In this document, you can find the results and explanations for the assignments of the first part of the portfolio for the course Natural Language Processing, taught at the University of Groningen.
+	In this document, you can find the results and explanations for the assignments of the first part of the portfolio for the course Natural Language Processing, taught at the University of Groningen. The corresponding Python code can be found at \url{https://github.com/leonwetzel/natural-language-processing}.
 
 \end{abstract}
 
-\section{Regular expressions I}
+\section{Week 1 - Regular Expressions}
 
-Set of all alphabetic strings
+We used \url{https://regex101.com/} to test our regular expressions. In this document, we use \texttt{$\wedge$} to better display/represent a caret.
+
+\subsection{Regular Expressions I}
+
+\begin{enumerate}
+	\item Set of all alphabetic strings. \\ $ \wedge [a-zA-z ]+\$ $
+	
+	\item Set of all lower case alphabetic strings ending in $b$. \\ $\wedge [a-z ]+[b]\$ $
+	
+	\item Set of all strings from the alphabet ${a,b}$ such that each $a$ is immediately preceded by a $b$ and immediately followed by a $b$. \\ $ \wedge [a-zA-z ]+\$ $
+\end{enumerate}
+
+\subsection{Regular Expressions II}
+
+\begin{enumerate}
+	\item Set of all strings with two consecutive repeated words (e.g., \textit{“Humbert Humbert”} and \textit{“the the”} but not \textit{“the bug”} or \textit{“the big and the bug”}). \\ $a + b = c$
+	
+	\item All strings that start at the beginning of the line with an integer and that end with a word. \\ $a + b = c$
+	
+	\item All strings that have both the word \textit{grotto} and the word \textit{raven} in them (but not, e.g., words like \textit{grottos} that merely contain the word \textit{grotto}). \\ $a + b = c$
+\end{enumerate}
+
+\subsection{ELIZA}
+
+\textit{Create a chatbot in Python using regular expressions. See the attached jupyter notebook for details.}
+
+\subsection{Byte-Pair Encoding}
+
+\textit{Experiment with more or less aggressive forms of tokenization and segmentation into subwords using the training data and code as explained in the jupyter notebook.}
+
+\section{Week 2 - N-gram Language Models}
+
+\subsection{J\&M exercise 3.1}
+
+\textit{Write out the equation for trigram probability estimation (modifying Eq. 3.11). Now write out all the non-zero trigram probabilities for the I am Sam corpus on page 41.}
+
+\subsection{J\&M exercise 3.2}
+
+\textit{Calculate the probability of the sentence i want chinese food. Give two probabilities, one using Fig. 3.2, and another using the add-1 smoothed table in Fig. 3.6.}
+
+\subsection{J\&M exercise 3.6}
+
+\textit{Suppose we train a trigram language model with add-one smoothing on a given corpus. The corpus contains V word types. Express a formula for estimating P(w3|w1,w2), where w3 is a word which follows the bigram (w1,w2), in terms of various N-gram counts and V. Use the notation c(w1,w2,w3) to denote the number of times that trigram (w1,w2,w3) occurs in the corpus, and so on for bigrams and unigrams.}
+
+\subsection{J\&M exercise 3.7}
+
+\textit{We are given the following corpus, modified from the one in the chapter:
+<s> I am Sam </s>
+<s> Sam I am </s>
+<s> I am Sam </s>
+<s> I do not  like green eggs and Sam </s>
+If we use linear interpolation smoothing between a maximum-likelihood bi-gram model and a maximum-likelihood unigram model with $\lambda$1 = 1/2 and $\lambda$2 = 1/2 , what is P(Sam|am)? Include <s> and </s> in your counts just like any other token.}
+
+\subsection{N-grams in the notebook}
+
+\textit{Answer the two questions in the notebook ngrams\_exercise.}
 
 \end{document}
