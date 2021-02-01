@@ -25,7 +25,7 @@
 
 %opening
 \title{\textbf{Natural Language Processing}\\Portfolio I}
-\author{Leon F.A. Wetzel\\ \texttt{l.f.a.wetzel@student.rug.nl}}
+\author{\textbf{Leon F.A. Wetzel}\\ Information Science \\ University of Groningen - Faculty of Arts\\ \texttt{l.f.a.wetzel@student.rug.nl}}
 
 \begin{document}
 
@@ -39,7 +39,7 @@
 
 \section{Week 1 - Regular Expressions}
 
-We used \url{https://regex101.com/} to test our regular expressions. In this document, we use \texttt{$\wedge$} to better display/represent a caret.
+We used \url{https://regex101.com/} to test our regular expressions. In this document, we use \texttt{$\wedge$} to better display/represent a caret. Spaces cannot be displayed in \LaTeX  sadly, so these are not shown below.
 
 \subsection{Regular Expressions I}
 
@@ -48,15 +48,15 @@ We used \url{https://regex101.com/} to test our regular expressions. In this doc
 	
 	\item Set of all lower case alphabetic strings ending in $b$. \\ $\wedge [a-z ]+[b]\$ $
 	
-	\item Set of all strings from the alphabet ${a,b}$ such that each $a$ is immediately preceded by a $b$ and immediately followed by a $b$. \\ $ \wedge [a-zA-z ]+\$ $
+	\item Set of all strings from the alphabet ${a,b}$ such that each $a$ is immediately preceded by a $b$ and immediately followed by a $b$. \\$\wedge(bab)+\$ $
 \end{enumerate}
 
 \subsection{Regular Expressions II}
 
 \begin{enumerate}
-	\item Set of all strings with two consecutive repeated words (e.g., \textit{“Humbert Humbert”} and \textit{“the the”} but not \textit{“the bug”} or \textit{“the big and the bug”}). \\ $a + b = c$
+	\item Set of all strings with two consecutive repeated words (e.g., \textit{“Humbert Humbert”} and \textit{“the the”} but not \textit{“the bug”} or \textit{“the big and the bug”}). \\ $ (\textbackslash w+) \textbackslash s+ \textbackslash1 $
 	
-	\item All strings that start at the beginning of the line with an integer and that end with a word. \\ $a + b = c$
+	\item All strings that start at the beginning of the line with an integer and that end with a word. \\ $ \wedge \textbackslash d+.+[a-zA-Z]+\$ $
 	
 	\item All strings that have both the word \textit{grotto} and the word \textit{raven} in them (but not, e.g., words like \textit{grottos} that merely contain the word \textit{grotto}). \\ $a + b = c$
 \end{enumerate}
