@@ -46,7 +46,7 @@ We used \url{https://regex101.com/} to test our regular expressions. In this doc
 \begin{enumerate}
 	\item Set of all alphabetic strings. \\ $ \wedge [a-zA-z ]+\$ $
 	
-	\item Set of all lower case alphabetic strings ending in $b$. \\ $\wedge [a-z ]+[b]\$ $
+	\item Set of all lower case alphabetic strings ending in $b$. \\ $\wedge [a-z ]*[b]\$ $
 	
 	\item Set of all strings from the alphabet ${a,b}$ such that each $a$ is immediately preceded by a $b$ and immediately followed by a $b$. \\$\wedge(bab)+\$ $
 \end{enumerate}
@@ -54,11 +54,11 @@ We used \url{https://regex101.com/} to test our regular expressions. In this doc
 \subsection{Regular Expressions II}
 
 \begin{enumerate}
-	\item Set of all strings with two consecutive repeated words (e.g., \textit{“Humbert Humbert”} and \textit{“the the”} but not \textit{“the bug”} or \textit{“the big and the bug”}). \\ $ (\textbackslash w+) \textbackslash s+ \textbackslash1 $
+	\item Set of all strings with two consecutive repeated words (e.g., \textit{“Humbert Humbert”} and \textit{“the the”} but not \textit{“the bug”} or \textit{“the big and the bug”}). \\ $ \textbackslash b(\textbackslash w+)\textbackslash b \textbackslash s+ \textbackslash1 $
 	
-	\item All strings that start at the beginning of the line with an integer and that end with a word. \\ $ \wedge \textbackslash d+.+[a-zA-Z]+\$ $
+	\item All strings that start at the beginning of the line with an integer and that end with a word. \\ $ \wedge \textbackslash d+.+ \textbackslash b[a-zA-Z]+\textbackslash b \$ $
 	
-	\item All strings that have both the word \textit{grotto} and the word \textit{raven} in them (but not, e.g., words like \textit{grottos} that merely contain the word \textit{grotto}). \\ $a + b = c$
+	\item All strings that have both the word \textit{grotto} and the word \textit{raven} in them (but not, e.g., words like \textit{grottos} that merely contain the word \textit{grotto}). \\ $ \textbackslash b \space { grotto} \textbackslash b.* | \textbackslash b \space { raven} \textbackslash b.*  $
 \end{enumerate}
 
 \subsection{ELIZA}
