@@ -36,24 +36,49 @@
 # +
 import re
 
-# a general function for matching a pattern against a String (the user input) and 
-# returning the Replacement (which can be defined by referring back to Match)
-def substitute(Match,Replacement,String) : 
-    pattern = re.compile(Match)
-    return pattern.sub(Replacement,String)
 
-# the chatbot 
-def eliza(Message) :
-    UserResponse = input(Message+'\t')
-    if UserResponse == 'quit' :
+def substitute(match, replacement, string):
+    """A general function for matching a pattern against a String
+     (the user input) and returning the Replacement (which can be
+      defined by referring back to Match)
+
+    :param match:
+    :param replacement:
+    :param string:
+    :return:
+    """
+    pattern = re.compile(match)
+    print('match = ', match)
+    print('rep = ', replacement)
+    print('str = ', string)
+    print('pat = ', pattern)
+    print()
+    return pattern.sub(replacement, string)
+
+
+def eliza(message):
+    """Chatbot interface
+
+    :param message:
+    :return:
+    """
+    user_response = input(message + '\t')
+    print("user response = ", user_response)
+    if user_response.lower() == 'quit' :
         return
-    else :
-        Answer = substitute(r'I feel',r'Why do you feel',
-                            substitute(r'I am',r'Why are you',UserResponse ))
-        if Answer == UserResponse : # i.e. no pattern matched the user response 
-            eliza('Could you tell more about that?')
+    else:
+        answer = substitute(r"I \b\w+\b", r"Why do you",
+                            substitute(r'I feel', r'Why do you feel',
+                                       substitute(r'I am', r'Why are you',
+                                                  substitute(r"I encounter", r"How come you encounter",
+                                                             substitute(r"I suffer from", r"Why do you suffer from",
+                                                                        substitute(r"I experience", r"Why do you experience",
+                                                                                              substitute(user_response, user_response + "?", user_response)))))))
+
+        if answer == user_response : # i.e. no pattern matched the user response
+            eliza(f'Could you tell more about that?')
         else :
-            eliza(substitute(r'\bmy\b', r'your', Answer))
+            eliza(substitute(r'\bmy\b', r'your', answer))
         
 eliza('How are you?')
     
