@@ -8,6 +8,8 @@
 \usepackage{dramatist}
 \usepackage{dirtytalk}
 
+\usepackage[round]{natbib}
+
 \usepackage{geometry}
 \geometry{
 	a4paper,
@@ -19,8 +21,9 @@
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
-	filecolor=magenta,      
-	urlcolor=cyan,
+	filecolor=blue,      
+	urlcolor=blue,
+	citecolor=blue
 }
 
 \setlength\parindent{0pt}
@@ -35,7 +38,7 @@
 
 \begin{abstract}
 	
-	In this document, you can find the results and explanations for the assignments of the first part of the portfolio for the course Natural Language Processing, taught at the University of Groningen. The corresponding Python code can be found at \url{https://github.com/leonwetzel/natural-language-processing}\footnote{All code will be published after the course has been completed}. Note that version control of Jupyter notebooks is done via \texttt{jupytext}, so do not forget to convert the Python scripts to notebooks yourself!
+	In this document, you can find the results and explanations for the assignments of the first part of the portfolio for the course Natural Language Processing, taught at the University of Groningen. The corresponding Python code can be found at \url{https://github.com/leonwetzel/natural-language-processing}\footnote{All code will be published after the course has been completed}. Note that version control of Jupyter notebooks is done via \texttt{jupytext}, so do not forget to convert the relevant Python scripts to notebooks yourself!
 
 \end{abstract}
 
@@ -116,9 +119,11 @@ The default value for \texttt{vocab\_size} ($v$) is $30000$. With this value, we
 	\label{tab:tokenizer_results}
 \end{table}
 
-When $v=7500$, the number of segments is approximately 150\% of the number of words. The longest words in our example text during this setup that was not segmented, are \textit{increased}, \textit{beginning} and \textit{initially}. All these words consist of nine characters each.
+When $v=7500$, the number of segments is approximately 150\% of the number of words. The longest words in our example text during this setup that were not segmented, are \textit{increased}, \textit{beginning} and \textit{initially}. All these words consist of nine characters each.
 
 \section{Week 2 - N-gram Language Models}
+
+For this week's assignment, we take a look at several assignments from \citet{jurafskyspeech}.
 
 \subsection{J\&M exercise 3.1}
 
@@ -141,21 +146,53 @@ Calculate the probability of the sentence \textit{i want chinese food}. Give two
 	}%
 }\\
 
+ahdhkshjhdishdius
+
 \subsection{J\&M exercise 3.6}
 
-\textit{Suppose we train a trigram language model with add-one smoothing on a given corpus. The corpus contains V word types. Express a formula for estimating P(w3|w1,w2), where w3 is a word which follows the bigram (w1,w2), in terms of various N-gram counts and V. Use the notation c(w1,w2,w3) to denote the number of times that trigram (w1,w2,w3) occurs in the corpus, and so on for bigrams and unigrams.}
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Suppose we train a trigram language model with add-one smoothing on a given corpus. The corpus contains $V$ word types. Express a formula for estimating $P(w3|w1,w2)$, where $w3$ is a word which follows the bigram $(w1,w2)$, in terms of various N-gram counts and $V$. Use the notation $c(w1,w2,w3)$ to denote the number of times that trigram $(w1,w2,w3)$ occurs in the corpus, and so on for bigrams and unigrams.
+	}%
+}\\
+
+sadsadsadsakdjsalkdj
 
 \subsection{J\&M exercise 3.7}
 
-\textit{We are given the following corpus, modified from the one in the chapter:
-<s> I am Sam </s>
-<s> Sam I am </s>
-<s> I am Sam </s>
-<s> I do not  like green eggs and Sam </s>
-If we use linear interpolation smoothing between a maximum-likelihood bi-gram model and a maximum-likelihood unigram model with $\lambda$1 = 1/2 and $\lambda$2 = 1/2 , what is P(Sam|am)? Include <s> and </s> in your counts just like any other token.}
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+We are given the following corpus, modified from the one in the chapter:\\
+<s> I am Sam </s>\\
+<s> Sam I am </s>\\
+<s> I am Sam </s>\\
+<s> I do not  like green eggs and Sam </s>\\
+If we use linear interpolation smoothing between a maximum-likelihood bi-gram model and a maximum-likelihood unigram model with $\lambda1 = 1/2$ and $\lambda2 = 1/2$ , what is $P(Sam|am)$? Include <s> and </s> in your counts just like any other token.
+	}%
+}\\
+
+
+sadsaldjsakdjlsadjsadsad
 
 \subsection{N-grams in the notebook}
 
-\textit{Answer the two questions in the notebook ngrams\_exercise.}
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+What are the different and common n-grams? You may ignore n-grams containing punctuation symbols.
+	}%
+}\\
+
+The X are different N-grams, whereas the Y are common N-grams.\\
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Describe in some detail (but in at most approximately 100 words) how one can implement a generation program based on a trigram language model.
+	}%
+}\\
+
+asdsadsad sadsadsadsa
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
 
 \end{document}
