@@ -34,7 +34,7 @@ from tokenizers.pre_tokenizers import Whitespace
 tokenizer = Tokenizer(BPE(unk_token="[UNK]"))
 tokenizer.pre_tokenizer = Whitespace()
 
-trainer = BpeTrainer(special_tokens=["[UNK]"],vocab_size=10000) # try with various vocab_sizes 
+trainer = BpeTrainer(special_tokens=["[UNK]"], vocab_size=10000) # try with various vocab_sizes
 
 # -
 
@@ -73,7 +73,6 @@ tokenizer.train(trainer,data)
 # +
 example = "The UG and the Hanze University of Applied Sciences are jointly initiating a pilot rapid testing centre, which will start on 18 January."
 
-
 output = tokenizer.encode(example)
 
 print(output.tokens)
@@ -100,11 +99,13 @@ print("{} words and {} segments".format(number_of_words,number_of_segments))
 # 5. For this setting, what was the longest word in your example text that was not segmented? 
 
 # +
-trainer = BpeTrainer(special_tokens=["[UNK]"],vocab_size=30000) # try with various vocab_sizes 
+trainer = BpeTrainer(special_tokens=["[UNK]"], vocab_size=7500) # try with various vocab_sizes
 
-tokenizer.train(trainer,data)
+tokenizer.train(trainer, data)
 
-testdata = "Enter some English text containing at least 100 words"
+testdata = """
+In January 2021, a short squeeze of the stock of the American video game retailer GameStop (NYSE: GME) and other securities took place, causing major financial consequences for certain hedge funds and large losses for short sellers. Approximately 140 percent of GameStop's public float had been sold short, and the rush to buy shares to cover those positions as the price rose caused it to rise even further. The short squeeze was initially and primarily triggered by users of the subreddit r/wallstreetbets, an Internet forum on the social news website Reddit. At its height, on January 28, the short squeeze caused the retailer's stock price to reach a pre-market value of over US$500 per share, nearly 30 times the $17.25 valuation at the beginning of the month. The price of many other heavily shorted securities increased.
+"""
 
 number_of_words = len(tokenizer.pre_tokenizer.pre_tokenize_str(testdata))
 
@@ -114,11 +115,12 @@ number_of_segments = len(output.tokens)
 
 print("{} words and {} segments".format(number_of_words,number_of_segments))
 
-# print(output.tokens)
+print(output.tokens)
 # answer the question about the longest word by going over the output, or write a few lines of code to provide the answer.
 
+tokens = sorted(output.tokens, key=len)
 
-
+print(tokens)
 # -
 
 

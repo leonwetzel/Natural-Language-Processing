@@ -48,11 +48,11 @@ def substitute(match, replacement, string):
     :return:
     """
     pattern = re.compile(match)
-    print('match = ', match)
-    print('rep = ', replacement)
-    print('str = ', string)
-    print('pat = ', pattern)
-    print()
+    # print('match = ', match)
+    # print('rep = ', replacement)
+    # print('str = ', string)
+    # print('pat = ', pattern)
+    # print()
     return pattern.sub(replacement, string)
 
 
@@ -63,7 +63,7 @@ def eliza(message):
     :return:
     """
     user_response = input(message + '\t')
-    print("user response = ", user_response)
+    # print("user response = ", user_response)
     if user_response.lower() == 'quit' :
         return
     else:
@@ -86,4 +86,9 @@ eliza('How are you?')
 
 # Copy the output of one example dialogue here. 
 
-#
+# How are you?	I experience coldness
+# Why do you experience coldness?	I feel as if it is snowing today
+# Why do you feel as if it is snowing today?	Because it is snowing today
+# Because it is snowing today?	Yes, but I am inside
+# Yes, but Why are you inside?	Because it is cold outside
+# Because it is cold outside?	Yes
