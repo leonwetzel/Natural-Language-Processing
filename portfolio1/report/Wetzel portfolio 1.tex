@@ -7,6 +7,7 @@
 \usepackage{mathtools}
 \usepackage{dramatist}
 \usepackage{dirtytalk}
+\usepackage{multicol}
 
 \usepackage[round]{natbib}
 
@@ -137,6 +138,78 @@ Write out the equation for trigram probability estimation (modifying Eq. 3.11). 
 The original - simplified - formula for bigram probability estimation is as follows:
 
 $$P(w_{n} | w_{n-1}) = \frac{C(w_{n-1}w_{n})}{C(w_{n-1})}$$
+
+For trigram probability estimation (where $n=3$), the formula would be:
+
+$$P(w_{3} | w_{3-1}) = \frac{C(w_{3-1}w_{3})}{C(w_{3-1})} \quad = \quad P(w_{3} | w_{2}) = \frac{C(w_{2}w_{3})}{C(w_{2})}$$
+
+Our corpus contains the following sentences:
+
+<s> I am Sam </s> \quad <s> Sam I am </s> \quad <s> I do not  like green eggs and ham </s>\\
+
+The non-zero trigram probabilities would be:
+
+%\begin{align*}
+%P(\text{Sam} | \text{I am}) = \frac{C(\text{I am Sam})}{C(\text{I am})} = \frac{1}{2} = 0.5 \qquad
+%P(\text{am} | \text{<s> I}) = \frac{C(\text{<s> I am})}{C(\text{<s> I})} = \frac{1}{2} = 0.5\\
+%P(\text{</s>} | \text{am Sam}) = \frac{C(\text{am Sam </s>})}{C(\text{am Sam})} = \frac{1}{1} = 1.0 \qquad
+%P(\text{I} | \text{<s> Sam}) = \frac{C(\text{<s> Sam I})}{C(\text{<s> Sam})} = \frac{1}{1} = 1.0\\
+%P(\text{am} | \text{Sam I}) = \frac{C(\text{Sam I am})}{C(\text{Sam I})} = \frac{1}{1} = 1.0 \qquad
+%P(\text{</s>} | \text{I am}) = \frac{C(\text{I am </s>})}{C(\text{I am})} = \frac{1}{2} = 0.5\\
+%P(\text{do} | \text{<s> I}) = \frac{C(\text{<s> I do})}{C(\text{<s>I})} = \frac{1}{2} = 0.5 \qquad
+%P(\text{not} | \text{I do}) = \frac{C(\text{I do not})}{C(\text{I do})} = \frac{1}{1} = 1.0\\
+%P(\text{like} | \text{do not}) = \frac{C(\text{do not like})}{C(\text{do not})} = \frac{1}{1} = 1.0 \qquad
+%P(\text{green} | \text{not like}) = \frac{C(\text{not like green})}{C(\text{not like})} = \frac{1}{1} = 1.0\\
+%P(\text{eggs} | \text{like green}) = \frac{C(\text{like green eggs})}{C(\text{like green})} = \frac{1}{1} = 1.0 \qquad P(\text{and} | \text{green eggs}) = \frac{C(\text{green eggs and})}{C(\text{green eggs})} = \frac{1}{1} = 1.0\\
+%P(\text{ham} | \text{eggs and}) = \frac{C(\text{eggs and ham})}{C(\text{eggs and})} = \frac{1}{1} = 1.0 \qquad
+%P(\text{</s>} | \text{and ham}) = \frac{C(\text{and ham </s>})}{C(\text{and ham})} = \frac{1}{1} = 1.0
+%\end{align*}\\
+
+\begin{multicols}{2}
+	\noindent
+	\begin{equation}
+P(\text{Sam} | \text{I am}) = \frac{C(\text{I am Sam})}{C(\text{I am})} = \frac{1}{2} = 0.5
+	\end{equation}
+	\begin{equation}
+P(\text{am} | \text{<s> I}) = \frac{C(\text{<s> I am})}{C(\text{<s> I})} = \frac{1}{2} = 0.5
+	\end{equation}
+	\begin{equation}
+	P(\text{</s>} | \text{am Sam}) = \frac{C(\text{am Sam </s>})}{C(\text{am Sam})} = \frac{1}{1} = 1.0
+	\end{equation}
+	\begin{equation}
+	P(\text{I} | \text{<s> Sam}) = \frac{C(\text{<s> Sam I})}{C(\text{<s> Sam})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{am} | \text{Sam I}) = \frac{C(\text{Sam I am})}{C(\text{Sam I})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{</s>} | \text{I am}) = \frac{C(\text{I am </s>})}{C(\text{I am})} = \frac{1}{2} = 0.5
+\end{equation}
+	\begin{equation}
+	P(\text{do} | \text{<s> I}) = \frac{C(\text{<s> I do})}{C(\text{<s>I})} = \frac{1}{2} = 0.5
+\end{equation}
+	\begin{equation}
+	P(\text{not} | \text{I do}) = \frac{C(\text{I do not})}{C(\text{I do})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{like} | \text{do not}) = \frac{C(\text{do not like})}{C(\text{do not})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{green} | \text{not like}) = \frac{C(\text{not like green})}{C(\text{not like})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{eggs} | \text{like green}) = \frac{C(\text{like green eggs})}{C(\text{like green})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{and} | \text{green eggs}) = \frac{C(\text{green eggs and})}{C(\text{green eggs})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{ham} | \text{eggs and}) = \frac{C(\text{eggs and ham})}{C(\text{eggs and})} = \frac{1}{1} = 1.0
+\end{equation}
+	\begin{equation}
+	P(\text{</s>} | \text{and ham}) = \frac{C(\text{and ham </s>})}{C(\text{and ham})} = \frac{1}{1} = 1.0
+\end{equation}
+\end{multicols}
 
 \subsection{J\&M exercise 3.2}
 
