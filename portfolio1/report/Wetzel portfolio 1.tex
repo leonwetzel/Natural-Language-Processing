@@ -8,6 +8,8 @@
 \usepackage{dramatist}
 \usepackage{dirtytalk}
 \usepackage{multicol}
+\usepackage{soul}
+\usepackage{xcolor}
 
 \usepackage[round]{natbib}
 
@@ -120,11 +122,11 @@ The default value for \texttt{vocab\_size} ($v$) is $30000$. With this value, we
 	\label{tab:tokenizer_results}
 \end{table}
 
-When $v=7500$, the number of segments is approximately 150\% of the number of words. The longest words in our example text during this setup that were not segmented, are \textit{increased}, \textit{beginning} and \textit{initially}. All these words consist of nine characters each.
+When $v=7500$, the number of segments (246) is exactly 150\% of the number of words (164). The longest words in our example text during this setup that were not segmented, are \textit{increased}, \textit{beginning} and \textit{initially}. All these words consist of nine characters each.
 
 \section{Week 2 - N-gram Language Models}
 
-For this week's assignment, we take a look at several assignments from \citet{jurafskyspeech}.
+For this week's assignment, we take a look at several exercises from \citet{jurafskyspeech}.
 
 \subsection{J\&M exercise 3.1}
 
@@ -145,25 +147,9 @@ $$P(w_{n} | w_{n-2} w_{n-1}) = \frac{C(w_{n-2} w_{n-1}w_{n})}{C(w_{n-2} w_{n-1})
 
 Our corpus contains the following sentences:
 
-<s> I am Sam </s> \quad <s> Sam I am </s> \quad <s> I do not  like green eggs and ham </s>\\
+\texttt{<s> I am Sam </s> \enspace <s> Sam I am </s> \enspace <s> I do not  like green eggs and ham </s>}\\
 
 The non-zero trigram probabilities would be:
-
-%\begin{align*}
-%P(\text{Sam} | \text{I am}) = \frac{C(\text{I am Sam})}{C(\text{I am})} = \frac{1}{2} = 0.5 \qquad
-%P(\text{am} | \text{<s> I}) = \frac{C(\text{<s> I am})}{C(\text{<s> I})} = \frac{1}{2} = 0.5\\
-%P(\text{</s>} | \text{am Sam}) = \frac{C(\text{am Sam </s>})}{C(\text{am Sam})} = \frac{1}{1} = 1.0 \qquad
-%P(\text{I} | \text{<s> Sam}) = \frac{C(\text{<s> Sam I})}{C(\text{<s> Sam})} = \frac{1}{1} = 1.0\\
-%P(\text{am} | \text{Sam I}) = \frac{C(\text{Sam I am})}{C(\text{Sam I})} = \frac{1}{1} = 1.0 \qquad
-%P(\text{</s>} | \text{I am}) = \frac{C(\text{I am </s>})}{C(\text{I am})} = \frac{1}{2} = 0.5\\
-%P(\text{do} | \text{<s> I}) = \frac{C(\text{<s> I do})}{C(\text{<s>I})} = \frac{1}{2} = 0.5 \qquad
-%P(\text{not} | \text{I do}) = \frac{C(\text{I do not})}{C(\text{I do})} = \frac{1}{1} = 1.0\\
-%P(\text{like} | \text{do not}) = \frac{C(\text{do not like})}{C(\text{do not})} = \frac{1}{1} = 1.0 \qquad
-%P(\text{green} | \text{not like}) = \frac{C(\text{not like green})}{C(\text{not like})} = \frac{1}{1} = 1.0\\
-%P(\text{eggs} | \text{like green}) = \frac{C(\text{like green eggs})}{C(\text{like green})} = \frac{1}{1} = 1.0 \qquad P(\text{and} | \text{green eggs}) = \frac{C(\text{green eggs and})}{C(\text{green eggs})} = \frac{1}{1} = 1.0\\
-%P(\text{ham} | \text{eggs and}) = \frac{C(\text{eggs and ham})}{C(\text{eggs and})} = \frac{1}{1} = 1.0 \qquad
-%P(\text{</s>} | \text{and ham}) = \frac{C(\text{and ham </s>})}{C(\text{and ham})} = \frac{1}{1} = 1.0
-%\end{align*}\\
 
 \begin{multicols}{2}
 	\noindent
@@ -220,11 +206,25 @@ Calculate the probability of the sentence \textit{i want chinese food}. Give two
 }\\
 
 Our sentence is:
-<s> i want chinese food </s>
+\texttt{<s> i want chinese food </s>}\\
 
-$$P()=$$
+The formula and result using figure 3.2 would be:
+\begin{equation}
+	\begin{split}
+		P(\text{<s> i want chinese food </s>}) & = P(\text{i}|\text{<s>}) * P(\text{want}|\text{i}) * P(\text{chinese}|\text{want}) * P(\text{food}|\text{chinese}) * P(\text{</s>}|\text{food}) \\
+		& = 0.25 * 0.33 * 0.0065 * 0.00092 * 0.68 \\
+		& = \textbf{0.00000034}
+	\end{split}
+\end{equation}
 
-$$P_{smoothed}()$$
+The formula and result using the add-1 smoothness from figure 3.6 would be:
+\begin{equation}
+	\begin{split}
+		P_{\text{Laplace}}(\text{<s> i want chinese food </s>}) & = P_{\text{Laplace}}(\text{i}|\text{<s>}) * P_{\text{Laplace}}(\text{want}|\text{i}) * P_{\text{Laplace}}(\text{chinese}|\text{want}) \\& * P_{\text{Laplace}}(\text{food}|\text{chinese}) * P_{\text{Laplace}}(\text{</s>}|\text{food}) \\
+		& = 0.25 * 0.21 * 0.0029 * 0.052 * 0.68 \\
+		& = \textbf{0.00000538356}
+	\end{split}
+\end{equation}
 
 
 \subsection{J\&M exercise 3.6}
@@ -235,23 +235,46 @@ Suppose we train a trigram language model with add-one smoothing on a given corp
 	}%
 }\\
 
-sadsadsadsakdjsalkdj
+The original formula with Laplacian smoothing is:
+
+\begin{equation}
+	P_{\text{Laplace}}(w_i) = \frac{c_i + 1}{N + V}
+\end{equation}
+
+A similar formula supporting trigrams would look like:
+
+\begin{equation}
+	P^*_{\text{Laplace}}(w_n|w_{n-1} w_{n-2}) = \frac{C(w_{n-2}w_{n-1}w_{n})+1}{\sum_{w} (C(w_{n-2}w_{n-1}w) + 1)} = \frac{C(w_{n-2}w_{n-1}w_n) + 1}{C(w_{n-2}w_{n-1}) + V}
+\end{equation}
 
 \subsection{J\&M exercise 3.7}
 
 \noindent\fbox{%
 	\parbox{\textwidth}{%
 We are given the following corpus, modified from the one in the chapter:\\
-<s> I am Sam </s>\\
+\texttt{<s> I am Sam </s>\\
 <s> Sam I am </s>\\
 <s> I am Sam </s>\\
-<s> I do not  like green eggs and Sam </s>\\
-If we use linear interpolation smoothing between a maximum-likelihood bi-gram model and a maximum-likelihood unigram model with $\lambda1 = 1/2$ and $\lambda2 = 1/2$ , what is $P(Sam|am)$? Include <s> and </s> in your counts just like any other token.
+<s> I do not  like green eggs and Sam </s>\\}
+If we use linear interpolation smoothing between a maximum-likelihood bi-gram model and a maximum-likelihood unigram model with $\lambda1 = 1/2$ and $\lambda2 = 1/2$ , what is $P(\text{Sam}|\text{am})$? Include <s> and </s> in your counts just like any other token.
 	}%
 }\\
 
+By the use of linear interpolation smoothing between the maximum-likelihood n-gram models (with $\lambda_{1} = 1/2$ and $\lambda_{2} = 1/2$), the formula would look like:
 
-sadsaldjsakdjlsadjsadsad
+\begin{equation}
+	\begin{split}
+		\hat{P}(w_n|w_{n-1}) = \lambda_1 P(w_n|w_{n-1}) + \lambda_2 P(w_{n})
+	\end{split}
+\end{equation}
+
+\begin{equation}
+	\begin{split}
+		\hat{P}(\text{Sam}|\text{am}) & = 1/2 * P(\text{Sam}|\text{am}) + 1/2 * P(\text{Sam}) \\
+		 & = 1/2 * \frac{C(\text{am Sam}) + 1}{C(\text{am}) + 1} + 1/2 * \frac{C(\text{am}) + 1}{C(\text{am}) + 1} \\ & = 1/2 * \frac{2 + 1}{3 + 1} + 1/2 * 1
+		 \\ & = 0.375 + 0.5 \\ & = 0.875
+	\end{split}
+\end{equation}
 
 \subsection{N-grams in the notebook}
 
@@ -261,7 +284,7 @@ What are the different and common n-grams? You may ignore n-grams containing pun
 	}%
 }\\
 
-The X are different N-grams, whereas the Y are common N-grams.\\
+Common bigrams are (of, the), (in, the), (,, and), (to, the), (., the), (united, states), (it, is), ()\\
 
 \noindent\fbox{%
 	\parbox{\textwidth}{%
@@ -269,7 +292,72 @@ Describe in some detail (but in at most approximately 100 words) how one can imp
 	}%
 }\\
 
-asdsadsad sadsadsadsa
+Trigram language models can be used effectively in a text generation program by exploiting the probabilities of words occurring in the same context (i.e. using maximum likelihood estimates). This approach could presumably lead to generated sentences that could directly replicate the training corpus if the highest probabilities are picked for text generation. On the other hand, trigrams are less unique than bigrams and far less unique than unigrams. The use of trigrams can lead to more comprehensible sentences to a certain degree.
+
+\section{Week 3 - POS Tagging and Hidden Markow Models}
+
+adasdasd
+
+\subsection{Error detection}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Find an error in each of the following sentences, labelled with Universal Dependency Part of Speech tags. Check with the on-line documentation, or search for similar examples in this search engine (any of the English corpora (development version) will do, except for ESL (sign language)).
+	}%
+}\\
+
+\begin{enumerate}
+	\item They/PRON promise/\st{NOUN} {\color{green}VERB} them/PRON the/DET delights/NOUN ,/PUNCT mostly/ADV sexual/ADJ ,/PUNCT  of/ADP the/DET next/ADJ
+	 world/NOUN
+	 
+	\item The/DET incident/NOUN proves/VERB that/SCONJ Sharon/PROPN has/AUX lost/VERB his/\st{DET} {\color{green}PRON} patience/NOUN
+	
+	\item Over/ADP the/DET last/ADJ twenty/\st{DET} {\color{green}NUM} years/NOUN ,/PUNCT use/NOUN of/ADP the/DET term/NOUN has/AUX been/AUX frequently/ADV criticized/VERB
+	
+	\item I/PRON do/AUX quickly/\st{ADJ} {\color{green}ADV} want/VERB to/PART comment/VERB
+	
+	\item I/PRON just/ADV wanted/\st{VERB} {\color{green}AUX} to/PART ask/VERB whether/ADV you/PRON read/VERB the/DET draft/NOUN
+\end{enumerate}
+
+\subsection{POS tagger}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Implement a baseline system for your corpus that assigns each word its most frequent PoS tag. Empty lines and lines starting with a \# can be ignored.  Also lines starting with a code that is not an integer (i.e. 13.1 or 13-14) can be ignored. Data is tab-separated. The second column is the word, the fourth column the POS-tag. All other columns can be ignored. Collect statistics for the most frequent PoS per word from the *-train.conllu file and compute the performance of the baseline method on the *-dev.conllu. Dealing with unknown words requires special attention. Report your accuracy for the 2 versions of the baseline: one that has the simplemest strategy for handling unknowns and scores for an improved version as suggested in the book.
+	}%
+}\\
+
+asdsadsa
+
+\subsection{HMM tagger}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Consider a bigram HMM tagger. Work out in detail the steps of the Viterbi algorithm in tagging the sentence \textit{zij zag hem slapen} where we have the following probabilities (start and end are used to represent the start-state and final-state respectively). The first columns give probabilities for tag sequences (P(T\_n|T\_n-1)), the final rows for word emission probabilities (P(W|T)). So the first row says P(DET|start) = 0.1 and P(zij|PRON) = 0.75.
+	}%
+}\\
+
+asdasdsad
+
+\subsection{Testing the baseline}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+The notebook hmm-ud.ipynb (or the python script hmm-ud.py3 if you prefer a command line) can be used to train and test a bigram PoS-tagger using the Hidden Markov Model on Universal Dependencies data. The system takes two arguments: one for the UD file containing the training data, and one for testing. Use the same corpus as you used for assignment 2. Use the dev data for initial testing and development. Report the accuracy of the baseline hmm tagger on your data. Now improve the handling of unknown words: try to improve the predictions made by the function unknown\_word\_guesser(word) in such a way that it no longer blindly assumes each unknown word is a NOUN but instead looks e.g. the form of the word (numbers, suffixes, upper case, ...) to make better predictions. See also the discussion in the book. Note that it is also possible to assume an unknown word is always either a NOUN or a VERB, etc. You can use the flag -v to obtain some feedback on tagging errors of the system (also showing which words were unknown). Use only the development corpus to improve the unknown word guesser. Report final accuracy scores for the test corpus (ie using test instead of dev for evaluation).
+	}%
+}\\
+
+asdsada
+
+\subsection{Viterbi complexity}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+		What is the complexity of the Viterbi algorithm for tagging with bigrams, in terms of the length of the sentence N, and the number of tags T. Explain your answer.
+	}%
+}\\
+
+asdasdasdasd
 
 \bibliographystyle{plainnat}
 \bibliography{refs}

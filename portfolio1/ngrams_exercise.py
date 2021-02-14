@@ -22,27 +22,33 @@
 #
 
 # +
+import string
 from nltk import ngrams, word_tokenize
 from nltk.text import Text
 from collections import Counter
-import fileinput, glob 
+import fileinput, glob
 
-n = 2   # ngram size
 
-corpus = glob.glob('presidential/roosevelt/*.txt')   # text to analyze, replace with path to one of the corpus subdirectories
-allngrams = []
-for sentence in fileinput.input(files=corpus):
-        # lower-case input, do basic tokenization, create ngrams of length n
-        sentencegrams = ngrams(word_tokenize(sentence.lower()),n)
-        words = word_tokenize(sentence.lower())
-        allngrams.extend(list(sentencegrams))
-        
-# print most frequent ngrams sorted by frequency
-nbest = 25 # modify if you want to see more results 
-for (key,val) in Counter(allngrams).most_common() :
-    if (nbest >= 0) :
+def generate(corpus, n=2, nbest=25):
+    allngrams = []
+    for sentence in fileinput.input(files=corpus):
+            # lower-case input, do basic tokenization, create ngrams of length n
+            sentencegrams = ngrams(word_tokenize(sentence.lower()),n)
+            words = word_tokenize(sentence.lower())
+            allngrams.extend(list(sentencegrams))
+
+    # print most frequent ngrams sorted by frequency
+    counts = Counter(allngrams).most_common()
+    for (key,val) in counts:
+        if nbest >= 0 and " ".join(key) not in string.punctuation:
             print(key,val)
-    nbest -= 1 
+        nbest -= 1
+    return counts
+
+bigrams1 = generate(glob.glob('presidential/roosevelt/*.txt'), 2, 50)
+bigrams2 = generate(glob.glob('presidential/fdroosevelt/*.txt'), 2, 50)
+
+print(bigrams1)
 # -
 
 # # N-gram generation 
