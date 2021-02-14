@@ -56,7 +56,7 @@ for (key,val) in Counter(allngrams).most_common() :
 # +
 import random, fileinput, glob 
 
-corpus = glob.glob('*.txt') # replace with the path to directory with text files 
+corpus = glob.glob('presidential/roosevelt/*.txt') # replace with the path to directory with text files
 
 seed = random.randint(0,1000)
 allwords = []
