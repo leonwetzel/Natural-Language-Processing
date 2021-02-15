@@ -39,16 +39,36 @@ def generate(corpus, n=2, nbest=25):
 
     # print most frequent ngrams sorted by frequency
     counts = Counter(allngrams).most_common()
+    output = []
     for (key,val) in counts:
-        if nbest >= 0 and " ".join(key) not in string.punctuation:
-            print(key,val)
+        if nbest >= 0 and not any(p in " ".join(key) for p in string.punctuation):
+            # print(" ".join(key))
+            output.append(key)
         nbest -= 1
-    return counts
+    return output
 
-bigrams1 = generate(glob.glob('presidential/roosevelt/*.txt'), 2, 50)
-bigrams2 = generate(glob.glob('presidential/fdroosevelt/*.txt'), 2, 50)
+bigrams1 = generate(glob.glob('presidential/roosevelt/*.txt'), 2, 100)
+bigrams2 = generate(glob.glob('presidential/fdroosevelt/*.txt'), 2, 100)
 
-print(bigrams1)
+trigrams1 = generate(glob.glob('presidential/roosevelt/*.txt'), 3, 100)
+trigrams2 = generate(glob.glob('presidential/fdroosevelt/*.txt'), 3, 100)
+
+intersection = list(set(bigrams1).intersection(set(bigrams2)))
+print("Common bigrams:")
+print(intersection)
+
+intersection = list(set(trigrams1).intersection(set(trigrams2)))
+print("Common trigrams:")
+print(intersection)
+
+difference = list(set(bigrams1).difference(set(bigrams2)))
+print("Different bigrams:")
+print(difference)
+
+difference = list(set(trigrams1).difference(set(trigrams2)))
+print("Different trigrams:")
+print(difference)
+
 # -
 
 # # N-gram generation 
