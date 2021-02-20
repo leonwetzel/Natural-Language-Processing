@@ -341,13 +341,13 @@ Implement a baseline system for your corpus that assigns each word its most freq
 	}%
 }\\
 
-asdsadsa
+The tagger with the \textit{simple} assignment strategy (assign \texttt{UNK} to unknown words) obtained an accuracy score of $0.8151069050122678$. After applying the improvement suggested in \citet{jurafskyspeech} (assign most frequent POS tag \texttt{NOUN} to unknown words), we obtained an accuracy score of $0.8751314405888538$.
 
 \subsection{HMM tagger}
 
 \noindent\fbox{%
 	\parbox{\textwidth}{%
-Consider a bigram HMM tagger. Work out in detail the steps of the Viterbi algorithm in tagging the sentence \textit{zij zag hem slapen} where we have the following probabilities (start and end are used to represent the start-state and final-state respectively). The first columns give probabilities for tag sequences $(P(T_n|T_{n-1}))$, the final rows for word emission probabilities ($P(W|T)$). So the first row says $P(DET|start) = 0.1$ and $P(zij|PRON) = 0.75$.
+Consider a bigram HMM tagger. Work out in detail the steps of the Viterbi algorithm in tagging the sentence \textit{zij zag hem slapen} where we have the following probabilities (start and end are used to represent the start-state and final-state respectively). The first columns give probabilities for tag sequences $(P(T_n|T_{n-1}))$, the final rows for word emission probabilities ($P(W|T)$). So the first row says $P(\text{DET}|\text{start}) = 0.1$ and $P(\text{zij}|\text{PRON}) = 0.75$.
 	}%
 }\\
 

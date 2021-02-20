@@ -38,13 +38,18 @@ def main():
     dev_data = extract(dev_corpus)
     model = train(training_data)
 
+    tag_counts = count_tags(training_data)
+    # print({k: v for k, v in sorted(tag_counts.items(), key=lambda item: item[1])})
+
+    # exit()
+
     target_values, predictions = [], []
     for word, target in dev_data:
         target_values.append(target)
         try:
             predictions.append(model[word])
         except KeyError:
-            predictions.append('UNK')
+            predictions.append('NOUN')
 
     print(accuracy_score(target_values, predictions))
 
@@ -85,15 +90,35 @@ def train(training_data):
 
     """
     counts = Counter(training_data)
-    glossary = {}
+    model = {}
     # sort counts by lowest occurrences, up to most frequent.
     # this allows higher frequencies to overwrite related
-    # values in the glossary
+    # values in the model
     for pair, _ in counts.most_common()[:-len(counts)-1:-1]:
         word, tag = pair
-        glossary[word] = tag
+        model[word] = tag
 
-    return glossary
+    return model
+
+
+def count_tags(data):
+    """Count tags from the data.
+
+    Parameters
+    ----------
+    data : iterable
+        List containing tuples, which consist of a word and a POS tag.
+    Returns
+    -------
+
+    """
+    counts = {}
+    for _, tag in data:
+        try:
+            counts[tag] += 1
+        except KeyError:
+            counts[tag] = 1
+    return counts
 
 
 if __name__ == '__main__':
