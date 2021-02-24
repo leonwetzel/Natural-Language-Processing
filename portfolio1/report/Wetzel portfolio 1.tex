@@ -33,7 +33,7 @@
 
 %opening
 \title{\textbf{Natural Language Processing}\\Portfolio I}
-\author{\textbf{Leon F.A. Wetzel}\\ Information Science \\ University of Groningen - Faculty of Arts\\ \texttt{l.f.a.wetzel@student.rug.nl}}
+\author{\textbf{Leon F.A. Wetzel}\\ Information Science \\ Faculty of Arts - University of Groningen\\ \texttt{l.f.a.wetzel@student.rug.nl}}
 
 \begin{document}
 
@@ -361,7 +361,7 @@ The notebook \texttt{hmm-ud.ipynb} (or the python script \texttt{hmm-ud.py} if y
 	}%
 }\\
 
-asdsada
+The baseline HMM tagger obtained an accuracy score of $0.8554756054756055$ on the test set. After this run, we made adjustments to the handling of unknown words by adding probabilities for \texttt{PROPN}, \texttt{PUNCT} and \texttt{VERB}.
 
 \subsection{Viterbi complexity}
 
@@ -372,6 +372,109 @@ asdsada
 }\\
 
 asdasdasdasd
+
+\section{Week 4: Distributional Semantics and Word Embeddings}
+
+\subsection{Cosine similarity}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+		Given the word co-occurrence matrix above, compute the cosine similarity of Apple and Snow, and of Snow and Ski. Is Snow more similar to Apple or Ski?
+	}%
+}\\
+
+$$\text{cosine}(\vec{v},\vec{w}) = \frac{\sum_{i=1}^{N} v_i w_i}{\sqrt{\sum_{i=1}^{N} v_{i}^2} \sqrt{\sum_{i=1}^{N} w_{i}^2}}$$
+
+$$\text{cosine}(\text{Apple}, \text{Snow}) = \frac{2*2 + 1*3 + 5*2}{\sqrt{2^2 + 1^2 + 5^2} \sqrt{2^2 + 3^2 + 2^2}} = \frac{17}{\sqrt{30} \sqrt{19}} \approx 0,71205$$
+
+$$\text{cosine}(\text{Snow}, \text{Ski}) = \frac{2*0 + 3*4 + 2*5}{\sqrt{2^2 + 3^2 + 2^2} \sqrt{0^2 + 4^2 + 5^2}} = \frac{12}{\sqrt{17} \sqrt{41}} \approx 0,45453$$
+
+Snow is more similar to Apple than Ski in this context.
+
+\subsection{Pointwise mutual information}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+		Given the co-occurrence matrix above, compute the pointwise mutual information (using eq 6.17) of  Mountain and Ski and of Apple and Fresh. Assume that the corpus size is 100.
+	}%
+}\\
+
+$$\text{PMI}(w_1, w_2) = \text{log}_2 \frac{P(w_1, w_2)}{P(w_1)P(w_2)} \qquad N=100$$
+
+Mountain and Ski:
+
+$$P(\text{Mountain},\text{Ski}) = \frac{5}{100} = 0.05$$
+
+$$P(\text{Mountain}) = \frac{12}{100} = 0.12 \qquad P(\text{Ski}) = \frac{9}{100} = 0.09$$
+
+$$\text{PMI}(\text{Mountain},\text{Ski}) = \text{log}_2 \frac{0.05}{0.12 * 0.09} \approx \text{log}_2(4.629636) \approx \textbf{0.665546}$$
+
+Apple and Fresh:
+
+$$P(\text{Apple},\text{Fresh}) = \frac{2}{100} = 0.02$$
+
+$$P(\text{Apple}) = \frac{8}{100} = 0.08 \qquad P(\text{Fresh}) = \frac{4}{100} = 0.04$$
+
+$$\text{PMI}(\text{Apple},\text{Fresh}) = \text{log}_2 \frac{0.02}{0.08 * 0.04} = \text{log}_2(6.25) \approx \textbf{0.795880}$$
+
+
+\subsection{Twitter word clusters}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Word2vec represents word meaning as a vector based on distributions of these words in a corpus. One way to visualise the result is to create clusters of similar words.  The Tweet NLP project of CMU provides clusters for embeddings trained English Tweets, and this is a similar demo  for Dutch.
+
+In the English clusters, can you find two examples of emphatic lengthening? (Emphatic lengthening is the phenomenon where some characters in a word are repeated to give extra stress to the word, Ha, haha, hahaha, etc.). Give the cluster ids and some examples of words in this cluster.
+	}%
+}\\
+
+It appears that clusters 001010111 and 00101110 include samples with emphatic lengthening. Cluster 001010111\footnote{\url{https://www.cs.cmu.edu/~ark/TweetNLP/paths/001010111.html}} contains words related to \textbf{ever}, and includes words such as \textit{eva}, \textit{evar}, \textit{everrr}, \textit{evah} and \textit{evur}. Cluster 00101110\footnote{\url{https://www.cs.cmu.edu/~ark/TweetNLP/paths/00101110.html}} contains words related to \textbf{really}, and includes words such as \textit{rly}, \textit{realy}, \textit{rlly}, \textit{reli}, \textit{reali} and \textit{reaaaly}.\\
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+		In the Dutch clusters, can you find 2 clusters consisting of predominantly English words? Give the cluster id and 5 representative words per cluster.
+	}%
+}\\
+
+Clusters 178 and 228 contain a fair amount of predominantly English words. Cluster 178 contains words such as \textit{livestream}, \textit{songfestival}, \textit{popstars}, \textit{friendzone} and \textit{xfactor}. Cluster 228 contains words such as \textit{track}, \textit{clip}, \textit{tune}, \textit{freestyle} and \textit{underground}.\\
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+In the Dutch data, can you find a cluster consisting predominantly of words from a language other than Dutch or English?
+	}%
+}\\
+
+Cluster 839\footnote{\url{http://www.let.rug.nl/gosse/twitter-clusters/paths/839.html}} seems to include Swedish words, such as \textit{kommer}, \textit{vi}, \textit{til}, \textit{han}, \textit{var} and \textit{jeg}.
+
+
+
+\subsection{Analogies in Word2Vec}
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Word Embeddings are trained on huge text corpora. They are sometimes evaluated by  checking top N lists of similar words, or by solving analogy problems. It has been observed that word embeddings may contain (undesirable) bias.   (see section 6.11 of J\&M,  and Bolukbasi et al (2016), Man is to computer programmer as woman is to homemaker?  and Manzini et al, 2019, Black is to criminal as caucasian is to police).\\
+
+Try to find two more examples using the on-line demo  (choose the corpus trained on English Google news). You can either use analogies (the logic in the analogy demo is word1 is to word2 as word3 is to word4,  or in terms of vectors:  the most similar word for vector word2-word1+word3 is word4 ie most-similar(king~man+woman)=queen, most-simiar(Amsterdam-Netherlands ~ Amsterdam + Germany)= Berlin). Note that in may analogy cases, word4 is also the most similar word of word2 if you just check for the most similar words to word2 (you can check this also in the demo), which suggests there is no bias in this case. So try to find cases where the outcome for word4 really depends on the presence of word3. An alternative method to detect bias is to check directly for the similarity of pairs of words, i.e. is similarity(man,programmer) different from similarity(woman,programmer). You may can use this method as well.
+	}%
+}\\
+
+The similarity score for $\{\text{man}, \text{doctor}\}$ is 0.3144896, whereas the similarity score for $\{\text{woman}, \text{doctor}\}$ is 0.37945858. The similarity score for $\{\text{man}, \text{engineer}\}$ is 0.15128928, whereas the similarity score for $\{\text{woman}, \text{engineer}\}$ is 0.09435379. If we take a look at the analogy demo and feed it with the triple $\{\text{man}, \text{doctor}, \text{woman}\}$, then the demo's top 3 words are $\{\text{gynecologist}, \text{nurse}, \text{doctors}\}$. \\
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+		Explain the problem and why you think this might be a problem in some settings/applications.
+	}%
+}\\	
+
+A model is as good as its (training) data, and the bias(es) from its author(s) can have severe impact on the display of the world in corpora. If systems rely on these analogies, they can potentially discriminate certain groups in a systematic way. \\
+
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Discuss possible solutions. (max approx 100 words.)
+	}%
+}\\	
+
+Possible solutions to combat this challenge could involve the use of corpora from various sources, instead of a single website or news outlet, and proper evaluations of similarities and analogies. Based on these evaluations, the developers can act on possible cases of discrimination and adjust the training data. Another solution could include adjusting the training parameters, and comparing the new word embeddings with the older word embeddings when it comes to similarity scores and analogies.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}

@@ -60,15 +60,15 @@ for tag in tags:
     cpd_tags[tag] = collections.defaultdict(lambda: 0.00001)  # stupid back-off over tag bigrams
 # i.e some tags are very infrequent, so make sure P(T2|T1) is never 0 to prevent errors when computing log probs
 
-with open(args.train_file) as training_corpus:
+with open(args.train_file, encoding='utf-8') as training_corpus:
     for line in training_corpus:
         # print(line,end="")
-        if (line.startswith('# text')):
+        if line.startswith('# text'):
             prevpos = 'START'
             pos_count['START'] += 1
-        elif (line == '\n'):
+        elif line == '\n':
             bigram_count[prevpos]['END'] += 1
-        elif (not (line.startswith('#'))):
+        elif not line.startswith('#'):
             fields = line.strip().split('\t')
             if fields[0].isdigit():  # skip 12.1 cases (ellipsis nodes)
                 word = fields[1]
@@ -82,12 +82,12 @@ with open(args.train_file) as training_corpus:
             # compute the conditional probabilities for P(W|T) and P(T_n|T_n-1)
 for tag in lex_count:
     total = pos_count[tag]
-    if (total > 0):  # start, end, error are special
+    if total > 0:  # start, end, error are special
         for (word, count) in lex_count[tag].items():
             cpd_tagwords[tag][word] = count / pos_count[tag]
 for tag in bigram_count:
     total = pos_count[tag]
-    if (total > 0):
+    if total > 0:
         for (tag2, count) in bigram_count[tag].items():
             cpd_tags[tag][tag2] = count / pos_count[tag]
 
@@ -103,6 +103,10 @@ unknown_word = {}
 # Heuristics to make sure P(W|T) > 0 for at least some tags T 
 def unknown_word_guesser(word):
     cpd_tagwords['NOUN'][word] = 0.0001
+
+    cpd_tagwords['PROPN'][word] = 0.0001
+    cpd_tagwords['PUNCT'][word] = 0.0001
+    cpd_tagwords['VERB'][word] = 0.0001
     # next two lines are for bookkeeping and informative error messages only
     known_word[word] = 1
     unknown_word[word] = 1
