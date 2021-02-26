@@ -351,7 +351,7 @@ Consider a bigram HMM tagger. Work out in detail the steps of the Viterbi algori
 	}%
 }\\
 
-asdasdsad
+Our sentence is: \texttt{<s> zij zag hem slapen </s>}
 
 \subsection{Testing the baseline}
 
@@ -361,7 +361,12 @@ The notebook \texttt{hmm-ud.ipynb} (or the python script \texttt{hmm-ud.py} if y
 	}%
 }\\
 
-The baseline HMM tagger obtained an accuracy score of $0.8554756054756055$ on the test set. After this run, we made adjustments to the handling of unknown words by adding probabilities for \texttt{PROPN}, \texttt{PUNCT} and \texttt{VERB}.
+The baseline HMM tagger obtained an accuracy score of $0.8554756054756055$ on the test set. After this run, we made adjustments to the handling of unknown words by adding probabilities for \texttt{PROPN}, \texttt{PUNCT} and \texttt{VERB} ($P(W|T)=0.0001$). This increased the accuracy score to 0.868989118989119.\\
+
+
+The next step in optimization was checking suffixes, prefixes and capitalisation of letters. After enabling the \texttt{--verbose} parameter, we observed that \texttt{ADJ} often end in \textit{er}. We added a check for this suffix and set the probability for \texttt{ADJ} to 0.01. We also checked if the word is numeric, and set the probability for \texttt{NUM} to 0.3. Lastly, we checked if a word starts with a capital letter and set the probability for \texttt{PROPN} to 0.5. These improvements - along with $P(W|T)=0.0001$ for both \texttt{NOUN} and \texttt{VERB} - increased the accuracy score to 0.8852228852228852. An extra check for the suffix \textit{ge} for \texttt{ADJ} raises this number to 0.887065637065637.\\
+
+For our final adjustments, we added the suffix \textit{ees} for \texttt{AJD} and adjusted the probabilities for \texttt{PROPN} (0.1), \texttt{NUM} (0.3) and \texttt{ADJ} (0.001). This lead to the highest accuracy score of 0.8896103896103896.
 
 \subsection{Viterbi complexity}
 
@@ -371,7 +376,7 @@ The baseline HMM tagger obtained an accuracy score of $0.8554756054756055$ on th
 	}%
 }\\
 
-asdasdasdasd
+$$O(N^T)$$
 
 \section{Week 4: Distributional Semantics and Word Embeddings}
 

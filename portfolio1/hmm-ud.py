@@ -19,6 +19,7 @@
 # import nltk
 import argparse
 import collections
+import string
 
 from numpy import log
 
@@ -102,10 +103,14 @@ unknown_word = {}
 
 # Heuristics to make sure P(W|T) > 0 for at least some tags T 
 def unknown_word_guesser(word):
-    cpd_tagwords['NOUN'][word] = 0.0001
+    if word.endswith(('er', 'ge', 'ees')):
+        cpd_tagwords['ADJ'][word] = 0.001
+    elif word.isnumeric():
+        cpd_tagwords['NUM'][word] = 0.3
+    elif word[0].isupper():
+        cpd_tagwords['PROPN'][word] = 0.1
 
-    cpd_tagwords['PROPN'][word] = 0.0001
-    cpd_tagwords['PUNCT'][word] = 0.0001
+    cpd_tagwords['NOUN'][word] = 0.001
     cpd_tagwords['VERB'][word] = 0.0001
     # next two lines are for bookkeeping and informative error messages only
     known_word[word] = 1
