@@ -351,7 +351,7 @@ Consider a bigram HMM tagger. Work out in detail the steps of the Viterbi algori
 	}%
 }\\
 
-Our sentence is: \texttt{<s> zij zag hem slapen </s>}
+Please check see appendix \ref{sec:viterbi} for the elaboration of this assignment.
 
 \subsection{Testing the baseline}
 
@@ -376,7 +376,9 @@ For our final adjustments, we added the suffix \textit{ees} for \texttt{AJD} and
 	}%
 }\\
 
-$$O(N^T)$$
+In a worst-case scenario, every token ($n_i$) in sentence $N$ can consist of $T$ possible tags. For every token, we need to compute the Viterbi value. As this is a bigram problem, we cope with pairs of tags. The amount of possible tags is then the square of $T$.
+
+$$O(N*T^2)$$
 
 \section{Week 4: Distributional Semantics and Word Embeddings}
 
@@ -483,5 +485,17 @@ Possible solutions to combat this challenge could involve the use of corpora fro
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
+
+\appendix
+
+\section{Assignment 3.3}
+\label{sec:viterbi}
+
+The optimal path is indicated in yellow.
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{viterbi.png}
+\end{figure}
+
 
 \end{document}
