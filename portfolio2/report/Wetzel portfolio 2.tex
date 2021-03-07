@@ -104,8 +104,40 @@ Give the calculations of $P$ to motivate your answer.
 	}%
 }\\
 
-$$P(w_t = V_{42} | w_{t-3}, w_{t-2}, w_{t-3})$$
+\begin{equation}
+	\left.\begin{aligned}
+		E &= d*|V| = 100 * 50.000 = 5.000.000\\
+		W &= d_h * 3d = 500 * 3 * 100 = 150.000\\
+		U &= |V| * d_h = 50.000 * 500 = 25.000.000\\
+		P &= E + W + U = 5.000.000 + 150.000 + 25.000.000 = 30.150.000
+	\end{aligned}
+	\right\}
+	\qquad \text{CS = 3}
+\end{equation}
 
+\begin{equation}
+	\left.\begin{aligned}
+		E &= d*|V| = 100 * 50.000 = 5.000.000\\
+		W &= d_h * 4d = 500 * 4 * 100 = 200.000\\
+		U &= |V| * d_h = 50.000 * 500 = 25.000.000\\
+		P &= E + W + U = 5.000.000 + 200.000 + 25.000.000 = 30.200.000
+	\end{aligned}
+	\right\}
+	\qquad \text{CS = 4}
+\end{equation}
+
+\begin{equation}
+	\left.\begin{aligned}
+		E &= d*|V| = 100 * 51.000 = 5.100.000\\
+		W &= d_h * 3d = 500 * 3 * 100 = 150.000\\
+		U &= |V| * d_h = 51.000 * 500 = 25.500.000\\
+		P &= E + W + U = 5.100.000 + 150.000 + 25.500.000 = 30.750.000
+	\end{aligned}
+	\right\}
+	\qquad \text{V = 51.000}
+\end{equation}
+
+Increasing the vocabulary size leads to a higher amount of trainable parameters, contrary to increasing the context-size. The size of vocabulary affects both $E$ and $U$ (opposed to only $W$ when changing the context size), which leads to higher values in the summation.
 \subsection{Architectures}
 
 \noindent\fbox{%
@@ -135,7 +167,88 @@ Think of a grammatical phenomenon in a language of your choice, and come up with
 	}%
 }\\
 
-asdsadasdsadsad\\
+\begin{enumerate}
+	\item De minister-president heeft [MASK] handtekening gezet onder de bepaling.
+		\begin{enumerate}
+		\item de;
+		\item een;
+		\item geen;
+		\item zijn;
+		\item deze;
+	\end{enumerate}
+	\item De ontwikkelaars onthouden [MASK] van commentaar op hun code.
+	\begin{enumerate}
+		\item software;
+		\item ook;
+		\item gebruik;
+		\item code;
+		\item niet;
+	\end{enumerate}
+	\item Het ijsje begon met [MASK] toen de zon doorbrak.
+		\begin{enumerate}
+		\item ij;
+		\item ,;
+		\item zon;
+		\item :;
+		\item water;
+	\end{enumerate}
+	\item De universiteit investeerde [MASK] in onderzoeken naar kunstmatige intelligentie.
+	\begin{enumerate}
+		\item ook;
+		\item verder;
+		\item \#\#n;
+		\item vooral;
+		\item zich;
+	\end{enumerate}
+	\item Het zwaard van Damocles hing boven [MASK] hoofd.
+	\begin{enumerate}
+		\item zijn;
+		\item het;
+		\item de;
+		\item haar;
+		\item hun;
+	\end{enumerate}
+	\item De kaas uit Duitsland was niet [MASK] dan de kaas uit Nederland.
+	\begin{enumerate}
+		\item groter;
+		\item meer;
+		\item kleiner;
+		\item anders;
+		\item beter;
+	\end{enumerate}
+	\item De diplomaten dronken uit [MASK] bekers terwijl het ongeval plaatsvond.
+	\begin{enumerate}
+		\item de;
+		\item in;
+		\item het;
+		\item uit;
+		\item en;
+	\end{enumerate}
+	\item Het weer was onstuimig, het [MASK] namelijk vrij hard.
+		\begin{enumerate}
+		\item was;
+		\item weer;
+		\item is;
+		\item kwam;
+		\item had;
+	\end{enumerate}
+	\item De scholen sloten hun deuren [MASK].
+		\begin{enumerate}
+		\item in;
+		\item aan;
+		\item op;
+		\item ';
+		\item .;
+	\end{enumerate}
+	\item Jan had gisteren [MASK] voet gestoten tegen de tafelpoot.
+		\begin{enumerate}
+		\item en;
+		\item met;
+		\item van;
+		\item aan;
+		\item de;
+	\end{enumerate}
+\end{enumerate}
 
 \noindent\fbox{%
 	\parbox{\textwidth}{%
@@ -144,5 +257,23 @@ Give at least ten example sentences with a [MASK] and a list of targets that ill
 Describe how well the model did on your probe sentences. Where there any cases where the model made the wrong decision?
 	}%
 }\\
+
+\section{Week 2 - Dependency Parsing}
+
+\subsection{Evaluation}
+
+asdadssa
+
+\subsection{Transition-based Parsing}
+
+asdasdasd
+
+\subsection{Crossing arcs}
+
+asdsadsad
+
+\subsection{Tny-dependency parser}
+
+asdasdas
 
 \end{document}
