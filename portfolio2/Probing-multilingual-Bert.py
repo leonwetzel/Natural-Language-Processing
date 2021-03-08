@@ -91,6 +91,24 @@ probe('There were some unexpected and unforeseen [MASK] for the proposed solutio
 #
 # Describe how well the model did on your probe sentences. Where there any cases where the model made the wrong decision?
 
-probe("The weather was [MASK]", ['good', 'nice'])
+probe("The weather was [MASK]", ['good', 'better'])
+
+probe("He climbed the [MASK] today", ['mountain', 'mountains'])
+
+probe("She went to the Dutch city of [MASK]", ["Amsterdam", "London"])
+
+probe("The matters that were discussed during today's meeting [MASK] returning tomorrow.", ['are', 'is'])
+
+probe("The dog [MASK] hunting for food in the evenings.", ['was', 'is', 'are'])
+
+probe("The person visited [MASK] grandparents today.", ['their', 'his', 'her'])
+
+probe("The doctor helped [MASK] with the construction of the bed.", ['him', 'her', 'them'])
+
+probe("He completed the race in six [MASK]", ['minutes', 'hours', 'seconds'])
+
+probe("London [MASK] fallen.", ['has', 'have'])
+
+probe("The streets of [MASK] are dirty.", ['Paris', 'London', 'Amsterdam'])
 
 
