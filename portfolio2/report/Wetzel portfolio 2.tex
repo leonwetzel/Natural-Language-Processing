@@ -150,7 +150,7 @@ Provide at least one example of an NLP application for each of the following tas
 	\centering
 	\begin{tabular}{l|l}
 	\textbf{Task formulation}	& \textbf{Example(s)} \\ \hline
-	One-to-many	&  \\
+	One-to-many	& Poem generation \\
 	Many-to-one	& Language detection \\
 	Many-to-many (seq2seq)	& Document summarization \\
 	Many-to-many (sequence labelling) & Semantic tagging
@@ -260,22 +260,78 @@ Describe how well the model did on your probe sentences. Where there any cases w
 
 Please see the notebook for the sentences that were tested. The model did quite well on the provided probe sentences. There is a noticeable bias present in the model when it comes to gender and pronoun usage; him/his often comes on tops when such cases are masked. Although the model performs well in most cases, it did make a slight error in the sentence \texttt{The dog [MASK] hunting for food in the evenings.}, where \textit{are} apparently has a higher score than \textit{was}. 
 
-\section{Week 2 - Dependency Parsing}
+\section{Week 6 - Dependency Parsing}
 
 \subsection{Evaluation}
 
-asdadssa
+We are given the following sentence: \texttt{I hate to put a little pressure on you}\\
+
+Our total amount of nodes ($N$) is 8, so our formulas would look like...
+
+	\begin{equation}
+		UAS = \frac{\text{\# of nodes with correct parent}}{8}
+	\end{equation}
+
+	\begin{equation}
+		LAS = \frac{\text{\# of nodes with correct parent and edge label}}{8}
+	\end{equation}
+
+For the example on the upper side, the scores are as follows:
+
+\noindent\begin{minipage}{.5\linewidth}
+	\begin{equation}
+		UAS = \frac{8}{8} = 1
+	\end{equation}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+	\begin{equation}
+		LAS = \frac{8}{8} = 1
+	\end{equation}
+\end{minipage}\\
+
+For the example on the lower side, the scores are as follows:
+
+\noindent\begin{minipage}{.5\linewidth}
+	\begin{equation}
+		UAS = \frac{6}{8} = 0.75
+	\end{equation}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+	\begin{equation}
+		LAS = \frac{3}{8} = 0.375
+	\end{equation}
+\end{minipage}
 
 \subsection{Transition-based Parsing}
 
-asdasdasd
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Describe the states and actions that a transition-based parser has to go through to produce the gold standard (top) analysis of the sentence
+in question 6.1. A state consists of a stack, input buffer, and set of dependency relations. An action is either SHIFT, RIGHTARC, or LEFTARC,
+where you can assume that the RIGHTARC and LEFTARC actions also produce the correctly labeled dependency relations.
+	}%
+}\\
+
+We are given the following sentence: \texttt{I hate to put a little pressure on you}\\
+
+jhhj
 
 \subsection{Crossing arcs}
 
-asdsadsad
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+It is not possible to produce the analysis for the sentence below using a transition-based parser. Give the state and input buffer for the point where the problem arises and explain why there is no sequence of actions that leads to a correct parse.
+	}%
+}\\
+
+We are given the following sentence: \texttt{Who did Kim talk to}\\
 
 \subsection{Tiny-dependency parser}
 
-asdasdas
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+Improve the oracle of the dependency parser in the notebook and train and evaluate it on the data. See notebook for details.
+	}%
+}\\
 
 \end{document}
