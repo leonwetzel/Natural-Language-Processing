@@ -399,6 +399,11 @@ def test_extraction():
     print("valency: ", Vs0b)
     print("Wn0b1: ", Ws0b1)
     print("Wn0b2:", Ws0b2)
+    
+
+def pad_tokens(tokens):
+    tokens.insert(0, '<start>')
+    tokens.append('ROOT')
 
     
 test_extraction()
@@ -410,7 +415,7 @@ test_extraction()
 ConllRow = namedtuple('ConllRow', 'id form lemma cpostag postag feats head deprel phead pdelrep'.split(" "))
 
 def read_conll(loc):
-    for sent_str in open(loc).read().strip().split('\n\n'):
+    for sent_str in open(loc, encoding='utf-8').read().strip().split('\n\n'):
         lines = [ConllRow(*line.split("\t")) for line in sent_str.split('\n')]
         words = DefaultList(''); tags = DefaultList(''); lemmas = DefaultList('')
         heads = [None]
@@ -427,10 +432,6 @@ def read_conll(loc):
         pad_tokens(lemmas)
         pad_tokens(tags)
         yield words, lemmas, tags, heads, labels
-
-def pad_tokens(tokens):
-    tokens.insert(0, '<start>')
-    tokens.append('ROOT')
 
 #### end read data
 
@@ -472,7 +473,7 @@ write_output_to_file = 1 # set to 0 for not writing predictions to file
 
 print("testing..")
 if write_output_to_file :
-    OUT = open(outputfile,"w")
+    OUT = open(outputfile,"w", encoding='utf-8')
     
 # Testing
 c = 0
