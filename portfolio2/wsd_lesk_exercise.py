@@ -93,7 +93,12 @@ wsd(text)
 #
 # N.B. We expect *original work*. I.e. make sure you pick a text that is not also being evaluated by one of your fellow students.
 
-# (your answer here)
+# + pycharm={"name": "#%%\n"}
+wsd("Lionel Messi is considered to be a goat. The goat was running away from the farm.")
+
+# + pycharm={"name": "#%%\n"}
+wsd("The rubber duck was floating in the swimming pool. The duck protected its children from the strangers in the park.")
+# -
 
 # ## 7.3 Predominant Meanings in Word Embeddings
 #
