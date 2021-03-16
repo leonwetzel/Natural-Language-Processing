@@ -94,12 +94,14 @@ wsd(text)
 # N.B. We expect *original work*. I.e. make sure you pick a text that is not also being evaluated by one of your fellow students.
 
 # + pycharm={"name": "#%%\n"}
-wsd("Lionel Messi is considered to be a goat. The goat was running away from the farm.")
-
-# + pycharm={"name": "#%%\n"}
 wsd("The rubber duck was floating in the swimming pool. The duck protected its children from the strangers in the park.")
+
 # -
 
+# A total of 22 tokens is present in our sentences. The percentage of content words for which the algorithm finds an entry in WordNet is $\approx$ 36.36% (8/22, including punctuation). If we exclude punctuation here, the percentage is 30% (6/20).
+#
+# A total of 14 words contain a word sense. The percentage of words for which the correct word sense was provided, is 21.24% (3/14)
+#
 # ## 7.3 Predominant Meanings in Word Embeddings
 #
 # Investigate to what extent (traditional, word2vec style) word embeddings reflect various meanings of a word.
