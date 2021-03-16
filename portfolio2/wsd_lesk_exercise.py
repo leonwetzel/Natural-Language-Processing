@@ -115,4 +115,12 @@ wsd("The rubber duck was floating in the swimming pool. The duck protected its c
 #
 # Try to __be original__ in your choice of key words, i.e. do not choose words that are also used as examples in the slides or in chapter 18 of J&M. 
 
-# (your answer here)
+# We chose the followings words for the comparisons:
+#
+# 1. chest
+# 2. honey
+# 3. clients
+# 4. apple
+# 5. client
+#
+#
