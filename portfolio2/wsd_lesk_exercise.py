@@ -123,4 +123,6 @@ wsd("The rubber duck was floating in the swimming pool. The duck protected its c
 # 4. apple
 # 5. client
 #
+# We used the online demo mentioned above, with the GoogleNews-vectors as word embeddings of choice.
+#
 #
