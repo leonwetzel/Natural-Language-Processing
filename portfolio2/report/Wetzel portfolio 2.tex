@@ -356,6 +356,25 @@ It is not possible to produce the analysis for the sentence below using a transi
 
 We are given the following sentence: \texttt{Who did Kim talk to}\\
 
+	\begin{table}[h]
+	\begin{tabular}{l|l|l|l|l}
+		Step & Stack & Word List & Action & Relation Added \\ \hline
+		0	& [root] & [Who, did, Kim, talk, to] & SHIFT &  \\
+		1	& [root, Who] & [did, Kim, talk, to] & SHIFT &  \\
+		2	& [root, Who, did] & [Kim, talk, to] & SHIFT &  \\
+		3	& [root, Who, did, Kim] & [talk, to] & SHIFT &  \\
+		4	& [root, Who, did, Kim, talk] & [to] & LEFTARC & (Kim $\leftarrow$ talk) \\
+		5	& [root, Who, did, talk] & [to] & LEFTARC & (did $\leftarrow$ talk) \\
+		6	& [root, Who, talk] & [to] & LEFTARC & (Who $\leftarrow$ talk) \\
+		\textbf{7}	& \textbf{[root, talk]} &\textbf{ [to]} & \textbf{SHIFT (?)} &  \\
+		? & [root] & [] & Done &
+	\end{tabular}
+	\centering
+	%\caption{Transition-based parsing of the sentence \textit{I hate to put a little pressure on you}.}
+	\end{table}
+
+As we can see in the table above, the problem arises near step 7. As a result of the previous LEFTARC action, we removed the word \textbf{Who} which would be needed for a later RIGHTARC operation. The remaining word \textbf{talk} cannot be coupled with \textbf{to}, as there is no sensible relation between these words. We cannot couple \textbf{root} and \textbf{talk} at this moment, as \textbf{to} is still part of either the stack or word list.
+
 \subsection{Tiny-dependency parser}
 
 \noindent\fbox{%

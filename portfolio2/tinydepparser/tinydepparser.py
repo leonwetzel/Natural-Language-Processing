@@ -303,7 +303,27 @@ def extract_features(words, lemmas, tags, n0, n, stack, parse):
 
 
     ##### Now that we have extracted some element, let us instantiate feature templates (=adding actual features)
-
+    
+    # UAS overview
+    # 65.81 = baseline 
+    # 68.34 = baseline + b_w1
+    # 68.55 = baseline + b_w1 + b_w2
+    # 69.60 = baseline + b_w1 + b_w2 + s_p1
+    # 69.56 = baseline + b_w1 + b_w2 + s_p1 + s_p2
+    # 69.65 = baseline + b_w1 + b_w2 + s_p1 + (s_w1, s_p1)
+    # 69.75 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1)
+    # 74.78 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0
+    # 74.80 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1
+    # 74.57 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2
+    # 74.69 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + (s_w2, s_p2)
+    # 75.06 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2)
+    # 76.78 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2) + (b_w0, s_p0)
+    # 77.63 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2) + (b_w0, s_p0), (b_w1, s_p1)
+    # > 77.71 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2) + (b_w0, s_p0), (b_w1, s_p1), (b_w2, s_p2)
+    # 77.16 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2) + (b_w0, s_p0), (b_w1, s_p1), (b_w2, s_p2), (b_l_valence, s_l_valence)
+    # 77.31 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2) + (b_w0, s_p0), (b_w1, s_p1), (b_w2, s_p2), b_l_valence
+    # 76.49 = baseline + b_w1 + b_w2 + s_p1 + s_p2 + (s_w1, s_p1) + b_p0 + b_p1 + b_p2 + (s_w2, s_p2) + (b_w0, s_p0), (b_w1, s_p1), (b_w2, s_p2), s_l_valence
+    
     # unigrams
     # add word features (including position) - on stack
     if s_w0: features.append(('s_w0=%s' % (s_w0), 1))
@@ -313,15 +333,35 @@ def extract_features(words, lemmas, tags, n0, n, stack, parse):
     # [ADD MORE!]
     # word unigram features on buffer
     if b_w0: features.append(('b_w0=%s' % (b_w0), 1))
+        
+    if b_w1: features.append(('b_w1=%s' % (b_w1), 1))
+    if b_w2: features.append(('b_w2=%s' % (b_w2), 1))
     
     # add pos features
     if s_p0: features.append(('s_p0=%s' % (s_p0), 1))
+    
+    if s_p1: features.append(('s_p1=%s' % (s_p1), 1))
+    if s_p2: features.append(('s_p2=%s' % (s_p2), 1))
 
     # some bigram features
     if s_w0 and s_p0: features.append(('s_w0=%s s_p0=%s' % (s_w0, s_p0), 1))
+        
+    if s_w1 and s_p1: features.append(('s_w1=%s s_p1=%s' % (s_w1, s_p1), 1))
+    if s_w2 and s_p2: features.append(('s_w2=%s s_p2=%s' % (s_w2, s_p2), 1))
+        
+    # CUSTOM word unigram features on buffer
+    if b_p0: features.append(('b_p0=%s' % (b_p0), 1))
+    if b_p1: features.append(('b_p1=%s' % (b_p1), 1))
+    if b_p2: features.append(('b_p2=%s' % (b_p2), 1))
 
-
-
+    if b_w0 and s_p0: features.append(('b_w0=%s s_p0=%s' % (b_w0, s_p0), 1))
+    if b_w1 and s_p1: features.append(('b_w1=%s s_p1=%s' % (b_w1, s_p1), 1))
+    if b_w2 and s_p2: features.append(('b_w2=%s s_p2=%s' % (b_w2, s_p2), 1))
+        
+    # if b_l_valence and s_l_valence: features.append(('b_l_valence=%s s_l_valence=%s' % (b_l_valence, s_l_valence), 1))
+    # if b_l_valence: features.append(('b_l_valence=%s' % (b_l_valence), 1))
+    # if s_l_valence: features.append(('s_l_valence=%s' % (s_l_valence), 1))
+    
     return features
 
 
@@ -440,7 +480,7 @@ def read_conll(loc):
 
 # ### Training the parser and oracle
 
-# +
+# + pycharm={"is_executing": true}
 parser = Parser(load=False)
 
 traincorpus = 'nl-train.conll'
@@ -462,7 +502,7 @@ print("done.")
 
 # ### Evaluation 
 
-# +
+# + pycharm={"is_executing": true}
 parser = Parser(load=True)
 
 testfile = 'nl-dev.conll'
@@ -510,6 +550,6 @@ if write_output_to_file:
 print('Parsing took %0.3f ms' % ((t2-t1)*1000.0))
 print("Unlabeled attachment scores (UAS) %0.2f (correct: %s, total %s)" % (c/t*100, c, t))
         
-# -
 
+# + pycharm={"is_executing": true}
 
