@@ -94,14 +94,12 @@ wsd(text)
 # N.B. We expect *original work*. I.e. make sure you pick a text that is not also being evaluated by one of your fellow students.
 
 # + pycharm={"name": "#%%\n"}
-wsd("The rubber duck was floating in the swimming pool. The duck protected its children from the strangers in the park.")
+wsd("Lionel Messi is considered to be a goat. The goat was running away from the farm.")
 
+# + pycharm={"name": "#%%\n"}
+wsd("The rubber duck was floating in the swimming pool. The duck protected its children from the strangers in the park.")
 # -
 
-# A total of 22 tokens is present in our sentences. The percentage of content words for which the algorithm finds an entry in WordNet is $\approx$ 36.36% (8/22, including punctuation). If we exclude punctuation here, the percentage is 30% (6/20).
-#
-# A total of 14 words contain a word sense. The percentage of words for which the correct word sense was provided, is 21.24% (3/14)
-#
 # ## 7.3 Predominant Meanings in Word Embeddings
 #
 # Investigate to what extent (traditional, word2vec style) word embeddings reflect various meanings of a word.
@@ -125,4 +123,23 @@ wsd("The rubber duck was floating in the swimming pool. The duck protected its c
 #
 # We used the online demo mentioned above, with the GoogleNews-vectors as word embeddings of choice.
 #
+# ## chest
+#
+# The top 20 nearest neighbours for the word _chest_ seem to be all related to the human body definition of the word. There appear to be no words that are related to boxes, for example.
+#
+# ## honey
+#
+# The top 20 nearest neighbours for the word _honey_ seem to be related to the natural substance and ingredient, rather than referencing a loved one.
+#
+# ## clients
+#
+# The top 20 nearest neighbours for the word _clients_ seem to be all related to customer affairs and business related words. Some words seem to be directly related to banking and finances.
+#
+# ## apple
+#
+# The top 20 nearest neighbours for the word _apple_ seem to be related to all sort of fruits and such. _almond_ and _potato_ are also among these words.
+#
+# ## client
+#
+# The top 20 nearest neighbours for the word _client_ seem to be more related to the legal profession, and includes words such as _form_, _attorneys_ and _defendant_. The differences with the word _clients_ are significant in this regard.
 #
