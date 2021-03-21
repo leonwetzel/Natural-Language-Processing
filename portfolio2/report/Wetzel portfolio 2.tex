@@ -19,6 +19,7 @@
 	total={150mm,257mm},
 	top=20mm,
 }
+\usepackage{adjustbox}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -314,7 +315,36 @@ where you can assume that the RIGHTARC and LEFTARC actions also produce the corr
 
 We are given the following sentence: \texttt{I hate to put a little pressure on you}\\
 
-jhhj
+We assume that the upper example from exercise 2.1 is the gold standard.\\
+
+\adjustbox{max width=\columnwidth}{
+%\begin{table}[h]
+	\begin{tabular}{l|l|l|l|l}
+	Step & Stack & Word List & Action & Relation Added \\ \hline
+	0	& [root] & [I, hate, to, put, a, little, pressure, on, you] & SHIFT &  \\
+	1	& [root, I] & [hate, to, put, a, little, pressure, on, you] & SHIFT &  \\
+	2	& [root, I, hate] & [to, put, a, little, pressure, on, you] & LEFTARC & (I $\leftarrow$ hate) \\
+	3	& [root, hate] & [to, put, a, little, pressure, on, you] & SHIFT &  \\
+	4	& [root, hate, to] & [put, a, little, pressure, on, you] & SHIFT &  \\
+	5	& [root, hate, to, put] & [a, little, pressure, on, you] & LEFTARC & (to $\leftarrow$ put) \\
+	6	& [root, hate, put] & [a, little, pressure, on, you] & SHIFT &  \\
+	7	& [root, hate, put, a] & [little, pressure, on, you] & SHIFT &  \\
+	8	& [root, hate, put, a, little] & [pressure, on, you] & SHIFT &  \\
+	9	& [root, hate, put, a, little, pressure] & [on, you] & LEFTARC & (little $\leftarrow$ pressure) \\
+	10	& [root, hate, put, a, pressure] & [on, you] & LEFTARC & (a $\leftarrow$ pressure) \\
+	11	& [root, hate, put, pressure] & [on, you] & RIGHTARC & (put $\rightarrow$ pressure) \\
+	12	& [root, hate, put] & [on, you] & SHIFT &  \\
+	13	& [root, hate, put, on] & [you] & SHIFT &  \\
+	13	& [root, hate, put, on, you] & [] & LEFTARC & (on $\leftarrow$ you) \\
+	14	& [root, hate, put, you] & [] & RIGHTARC & (put $\rightarrow$ you) \\
+	15	& [root, hate, put] & [] & RIGHTARC & (hate $\rightarrow$ put) \\
+	15	& [root, hate] & [] & RIGHTARC & (root $\rightarrow$ hate) \\
+	16	& [root] & [] & Done & \\ \hline
+	\end{tabular}
+\centering
+%\caption{Transition-based parsing of the sentence \textit{I hate to put a little pressure on you}.}
+%\end{table}
+}
 
 \subsection{Crossing arcs}
 
